@@ -8,9 +8,15 @@ window.addEventListener('load', function(){
     canvas.height = 500;
 
     class InputHandler {
-        /*constructor(game){
+        constructor(game){
             this.game = game;
-        }*/
+            window.addEventListener('keydown', event => {
+                if (event.key === 'ArrowUp'){
+                    this.game.keys.push(event.key);
+                }
+                console.log(this.game.keys);
+            });
+        }
     }
     class Projectile {
 
@@ -51,6 +57,8 @@ window.addEventListener('load', function(){
             this.width = width;
             this.height = height;
             this.player = new Player(this);
+            this.input = new InputHandler(this);
+            this.keys = [];
         }
         update(){
             this.player.update();
