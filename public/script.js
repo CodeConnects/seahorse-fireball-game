@@ -8,7 +8,9 @@ window.addEventListener('load', function(){
     canvas.height = 500;
 
     class InputHandler {
-
+        /*constructor(game){
+            this.game = game;
+        }*/
     }
     class Projectile {
 
