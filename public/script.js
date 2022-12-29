@@ -57,12 +57,12 @@ window.addEventListener('load', function(){
             this.x = 20;
             this.y = 100;
             this.speedY = 0;
-            this.maxSpeed = 2;
+            this.maxSpeed = 3;
             this.projectiles = [];
         }
         update(){
             if (this.game.keys.includes('ArrowUp')) this.speedY = -this.maxSpeed;
-            else if (this.game.keys.includes('ArrowDown')) this.speedY = +this.maxSpeed;
+            else if (this.game.keys.includes('ArrowDown')) this.speedY = this.maxSpeed;
             else this.speedY = 0;
             this.y += this.speedY;
 
@@ -80,7 +80,10 @@ window.addEventListener('load', function(){
             });
         }
         shootTop(){
-            this.projectiles.push(new Projectile(this.game, this.x, this.y));
+            if (this.game.ammo > 0){
+                this.projectiles.push(new Projectile(this.game, this.x + 80, this.y + 30));
+                this.game.ammo--;
+            }   
         }
     }
     class Enemy {
@@ -102,9 +105,22 @@ window.addEventListener('load', function(){
             this.player = new Player(this);
             this.input = new InputHandler(this);
             this.keys = [];
+            this.ammo = 20;
+            this.maxAmmo = 50;
+            this.ammoTimer = 0;
+            this.ammoInterval = 500;
         }
-        update(){
+        update(deltaTime){
             this.player.update();
+            if (this.ammoTimer > this.ammoInterval){
+                if (this.ammo < this.maxAmmo) {
+                    this.ammo++;
+                    console.log('ammo count: ' + this.ammo);
+                }
+                this.ammoTimer = 0;
+            } else {
+                this.ammoTimer += deltaTime;
+            }
         }
         draw(context){
             this.player.draw(context);
@@ -113,17 +129,24 @@ window.addEventListener('load', function(){
 
     const game = new Game(canvas.width, canvas.height);
 
+    let lastTime = 0;
+
     // animation loop
-    function animate(){
+    function animate(timeStamp){
+
+        const deltaTime = timeStamp - lastTime;
+        // console.log(deltaTime);
+
+        lastTime = timeStamp;
 
         // clear what has already been drawn while looping
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        game.update();
+        game.update(deltaTime);
         game.draw(ctx);
 
         // using parent as argument to make endless loop
         requestAnimationFrame(animate);
     }
-    animate();
+    animate(0);
 });
