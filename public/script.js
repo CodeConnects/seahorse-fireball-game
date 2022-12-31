@@ -156,7 +156,7 @@ window.addEventListener('load', function(){
                     message1 = 'You win!';
                     message2 = 'Well done!';
                 } else {
-                    message1 = 'You lose!';
+                    message1 = 'You lost!';
                     message2 = 'Better luck next time!';
                 }
                 context.font = '50px ' + this.fontFamily;
