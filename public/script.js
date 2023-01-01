@@ -4,7 +4,7 @@ window.addEventListener('load', function(){
 
     // context type, '2d' or 'webgl' (3d)
     const ctx = canvas.getContext('2d');
-    canvas.width = 500;
+    canvas.width = 840;
     canvas.height = 500;
 
     class InputHandler {
@@ -112,7 +112,7 @@ window.addEventListener('load', function(){
             this.maxFrame = 37;
         }
         update(){
-            this.x += this.speedX;
+            this.x += this.speedX - this.game.speed;
             if (this.x + this.width < 0) this.markedForDeletion = true;
             // sprite animation
             if (this.frameX < this.maxFrame){
@@ -123,7 +123,7 @@ window.addEventListener('load', function(){
             if (this.game.debug) context.strokeRect(this.x, this.y, this.width, this.height);
             context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height, this.x, this.y, this.width, this.height);
             context.font = '20px Helvetica';
-            context.fillText(this.lives, this.x, this.y)
+            context.fillText(this.lives, this.x, this.y);
         }
     }
     class Angler1 extends Enemy {
@@ -247,9 +247,9 @@ window.addEventListener('load', function(){
             this.ammoInterval = 500;
             this.gameOver = false;
             this.score = 0;
-            this.winningScore = 10;
+            this.winningScore = 100;
             this.gameTime = 0;
-            this.timeLimit = 10000;
+            this.timeLimit = 60000;
             this.speed = 1;
             this.debug = true;
         }
