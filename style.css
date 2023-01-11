@@ -2,8 +2,8 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-body { margin: 0; padding: 0; background-color: #282828; 
-    background: linear-gradient(#222222, #333333);
+body { margin: 0; padding: 0; background: rgb(29,28,59);
+    background: linear-gradient(90deg, rgba(29,28,59,1) 0%, rgba(5,5,41,1) 100%);
 }
 
 #canvas1 { border: 5px solid black; position: absolute; 
