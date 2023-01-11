@@ -251,7 +251,7 @@ window.addEventListener('load', function(){
             this.gameTime = 0;
             this.timeLimit = 60000;
             this.speed = 1;
-            this.debug = true;
+            this.debug = false;
         }
         update(deltaTime){
             if (!this.gameOver) this.gameTime += deltaTime;
