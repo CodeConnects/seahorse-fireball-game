@@ -75,7 +75,7 @@ window.addEventListener('load', function(){
             this.image = document.getElementById('player');
             this.powerUp = false;
             this.powerUpTimer = 0;
-            this.powerUpLimit = 18000;
+            this.powerUpLimit = 4000;
         }
         update(deltaTime){
             if (this.game.keys.includes('ArrowUp')) this.speedY = -this.maxSpeed;
