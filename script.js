@@ -135,7 +135,7 @@ window.addEventListener('load', function(){
             this.y = Math.random() * (this.game.height * 0.9 - this.height);
             this.image = document.getElementById('angler1');
             this.frameY = Math.floor(Math.random() * 3);
-            this.lives = 5;
+            this.lives = 2;
             this.score = this.lives;
         }
     }
@@ -147,8 +147,21 @@ window.addEventListener('load', function(){
             this.y = Math.random() * (this.game.height * 0.9 - this.height);
             this.image = document.getElementById('angler2');
             this.frameY = Math.floor(Math.random() * 2);
-            this.lives = 5;
+            this.lives = 3;
             this.score = this.lives;
+        }
+    }
+    class LuckyFish extends Enemy {
+        constructor(game){
+            super(game);
+            this.width = 99;
+            this.height = 95;
+            this.y = Math.random() * (this.game.height * 0.9 - this.height);
+            this.image = document.getElementById('luckyFish');
+            this.frameY = Math.floor(Math.random() * 2);
+            this.lives = 3;
+            this.score = 15;
+            this.type = 'lucky';
         }
     }
 
@@ -323,9 +336,10 @@ window.addEventListener('load', function(){
             // random number between zero and one
             const randomize = Math.random();
 
-            // show one of two enemies so far
-            if (randomize < 0.5) this.enemies.push(new Angler1(this));
-            else this.enemies.push(new Angler2(this));
+            // show one of two enemies or luckyfish so far
+            if (randomize < 0.3) this.enemies.push(new Angler1(this));
+            else if (randomize < 0.6) this.enemies.push(new Angler2(this));
+            else this.enemies.push(new LuckyFish(this));
 
             console.log(this.enemies);
         }
