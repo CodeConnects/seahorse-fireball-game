@@ -39,14 +39,21 @@ window.addEventListener('load', function(){
             this.height = 3;
             this.speed = 3;
             this.markedForDeletion = false;
+            this.image = document.getElementById('projectile');
+            
         }
         update(){
             this.x += this.speed;
             if (this.x > this.game.width * 0.8) this.markedForDeletion = true;
         }
         draw(context){
+            /* solid yellow
             context.fillStyle = 'yellow';
             context.fillRect(this.x, this.y, this.width, this.height);
+            */
+
+            // image projectile
+            context.drawImage(this.image, this.x, this.y);
         }
     }
     class Particle {
@@ -68,7 +75,7 @@ window.addEventListener('load', function(){
             this.image = document.getElementById('player');
             this.powerUp = false;
             this.powerUpTimer = 0;
-            this.powerUpLimit = 10000;
+            this.powerUpLimit = 18000;
         }
         update(deltaTime){
             if (this.game.keys.includes('ArrowUp')) this.speedY = -this.maxSpeed;
