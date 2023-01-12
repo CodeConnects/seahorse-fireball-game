@@ -318,7 +318,14 @@ window.addEventListener('load', function(){
             this.background.layer4.draw(context);
         }
         addEnemy(){
-            this.enemies.push(new Angler1(this));
+            // random number between zero and one
+            const randomize = Math.random();
+
+            // show one of two enemies so far
+            if (randomize < 0.5) this.enemies.push(new Angler1(this));
+            else this.enemies.push(new Angler2(this));
+
+            console.log(this.enemies);
         }
         checkCollision(rect1, rect2){
             return (    rect1.x < rect2.x + rect2.width &&
