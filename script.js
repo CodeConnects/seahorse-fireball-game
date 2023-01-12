@@ -247,7 +247,7 @@ window.addEventListener('load', function(){
         constructor(game){
             this.game = game;
             this.fontSize = 25;
-            this.fontFamily = 'Helvetica';
+            this.fontFamily = 'Audiowide';
             this.color = 'white';
         }
         draw(context){
@@ -276,12 +276,12 @@ window.addEventListener('load', function(){
                     message2 = 'Well done!';
                 } else {
                     message1 = 'You lost!';
-                    message2 = 'Better luck next time!';
+                    message2 = 'Maybe next time!';
                 }
-                context.font = '50px ' + this.fontFamily;
-                context.fillText(message1, this.game.width * 0.5, this.game.height * 0.5 - 15);
+                context.font = '64px ' + this.fontFamily;
+                context.fillText(message1, this.game.width * 0.5, this.game.height * 0.5 - 18);
                 context.font = '25px ' + this.fontFamily;
-                context.fillText(message2, this.game.width * 0.5, this.game.height * 0.5 + 15);
+                context.fillText(message2, this.game.width * 0.5, this.game.height * 0.5 + 18);
             }
 
             // ammo
