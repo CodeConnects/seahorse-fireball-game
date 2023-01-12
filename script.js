@@ -83,6 +83,14 @@ window.addEventListener('load', function(){
             else this.speedY = 0;
             this.y += this.speedY;
 
+            // vertical player boundaries
+
+            // bottom boundary tail can go 50% below screen
+            if (this.y >  this.game.height - this.height * 0.5) this.y = this.game.height - this.height * 0.5;
+
+            // top boundary head can go 50% above screen
+            else if (this.y < -this.height * 0.5 ) this.y = -this.height * 0.5;
+
             // handle projectiles
             this.projectiles.forEach(projectile => {
                 projectile.update();
