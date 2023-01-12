@@ -4,7 +4,8 @@ window.addEventListener('load', function(){
 
     // context type, '2d' or 'webgl' (3d)
     const ctx = canvas.getContext('2d');
-    canvas.width = 840;
+    //canvas.width = 840;
+    canvas.width = 700;
     canvas.height = 500;
 
     class InputHandler {
@@ -114,6 +115,7 @@ window.addEventListener('load', function(){
         update(){
             this.x += this.speedX - this.game.speed;
             if (this.x + this.width < 0) this.markedForDeletion = true;
+            
             // sprite animation
             if (this.frameX < this.maxFrame){
                 this.frameX++;
@@ -126,6 +128,7 @@ window.addEventListener('load', function(){
             context.fillText(this.lives, this.x, this.y);
         }
     }
+
     class Angler1 extends Enemy {
         constructor(game){
             super(game);
@@ -134,6 +137,16 @@ window.addEventListener('load', function(){
             this.y = Math.random() * (this.game.height * 0.9 - this.height);
             this.image = document.getElementById('angler1');
             this.frameY = Math.floor(Math.random() * 3);
+        }
+    }
+    class Angler2 extends Enemy {
+        constructor(game){
+            super(game);
+            this.width = 213;
+            this.height = 165;
+            this.y = Math.random() * (this.game.height * 0.9 - this.height);
+            this.image = document.getElementById('angler2');
+            this.frameY = Math.floor(Math.random() * 2);
         }
     }
 
