@@ -104,10 +104,11 @@ window.addEventListener('load', function(){
         }
         draw(context){
             if (this.game.debug) context.strokeRect(this.x, this.y, this.width, this.height);
-            context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height, this.x, this.y, this.width, this.height);
             this.projectiles.forEach(projectile => {
                 projectile.draw(context);
             });
+            context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height, this.x, this.y, this.width, this.height);
+
         }
         shootTop(){
             if (this.game.ammo > 0){
@@ -254,11 +255,6 @@ window.addEventListener('load', function(){
             // score
             context.fillText('Score: ' +this.game.score, 20, 40);
 
-            // ammo
-            for (let i = 0; i < this.game.ammo; i++){
-                context.fillRect(20 + 5 * i, 50, 3, 20);
-            }
-
             // timer
             const formattedTime = (this.game.gameTime * 0.001).toFixed(1);
             context.fillText('Timer: ' + formattedTime, 20, 100);
@@ -279,6 +275,12 @@ window.addEventListener('load', function(){
                 context.fillText(message1, this.game.width * 0.5, this.game.height * 0.5 - 15);
                 context.font = '25px ' + this.fontFamily;
                 context.fillText(message2, this.game.width * 0.5, this.game.height * 0.5 + 15);
+            }
+
+            // ammo
+            if (this.game.player.powerUp) context.fillStyle = '#ffffbd';
+            for (let i = 0; i < this.game.ammo; i++){
+                context.fillRect(20 + 5 * i, 50, 3, 20);
             }
 
             context.restore();
