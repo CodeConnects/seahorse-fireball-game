@@ -56,7 +56,7 @@ window.addEventListener('load', function(){
             context.drawImage(this.image, this.x, this.y);
         }
     }
-    class Particle {
+    class Shrapnel {
         constructor(game, x, y){
             this.game = game;
             this.x = x;
@@ -346,7 +346,7 @@ window.addEventListener('load', function(){
             this.ui = new UI(this);
             this.keys = [];
             this.enemies = [];
-            this.particles = [];
+            this.shrapnel = [];
             this.enemyTimer = 0;
             this.enemyInterval = 1000;
             this.ammo = 20;
@@ -377,15 +377,15 @@ window.addEventListener('load', function(){
                 this.ammoTimer += deltaTime;
             }
 
-            this.particles.forEach(particle => particle.update());
-            this.particles = this.particles.filter(particle => !particle.markedForDeletion);
+            this.shrapnel.forEach(onePiece => onePiece.update());
+            this.shrapnel = this.shrapnel.filter(onePiece => !onePiece.markedForDeletion);
 
             this.enemies.forEach(enemy => {
                 enemy.update();
                 if (this.checkCollision(this.player, enemy)){
                     enemy.markedForDeletion = true;
                     for (let i = 0; i < 10; i++){
-                        this.particles.push(new Particle(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
+                        this.shrapnel.push(new Shrapnel(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                     }
                     if (enemy.type = 'lucky') this.player.enterPowerUp();
                     else this.score--;
@@ -394,10 +394,10 @@ window.addEventListener('load', function(){
                     if (this.checkCollision(projectile, enemy)){
                         enemy.lives--;
                         projectile.markedForDeletion = true;
-                        this.particles.push(new Particle(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
+                        this.shrapnel.push(new Shrapnel(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                         if (enemy.lives <= 0){
                             for (let i = 0; i < 10; i++){
-                                this.particles.push(new Particle(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
+                                this.shrapnel.push(new Shrapnel(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                             }
                             enemy.markedForDeletion = true;
                             if (!this.gameOver) this.score += enemy.score;
@@ -420,7 +420,7 @@ window.addEventListener('load', function(){
             this.background.draw(context);
             this.player.draw(context);
             this.ui.draw(context);
-            this.particles.forEach(particle => particle.draw(context));
+            this.shrapnel.forEach(onePiece => onePiece.draw(context));
             this.enemies.forEach(enemy => {
                 enemy.draw(context);
             });
