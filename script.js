@@ -82,9 +82,9 @@ window.addEventListener('load', function(){
             this.x -= this.speedX;
             this.y += this.speedY;
             if (this.y > this.game.height + this.size || this.x < 0 - this.size) this.markedForDeletion = true;
-            if (this.y > this.game.height - this.bottomBounceBoundary && !this.bounced) {
-                this.bounced = true;
-                this.speedY *= -0.5;
+            if (this.y > this.game.height - this.bottomBounceBoundary && this.bounced < 2) {
+                this.bounced++;
+                this.speedY *= -0.9;
             }
         }
         draw(context){
@@ -396,6 +396,9 @@ window.addEventListener('load', function(){
                         projectile.markedForDeletion = true;
                         this.particles.push(new Particle(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                         if (enemy.lives <= 0){
+                            for (let i = 0; i < 10; i++){
+                                this.particles.push(new Particle(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
+                            }
                             enemy.markedForDeletion = true;
                             if (!this.gameOver) this.score += enemy.score;
                             if (this.score > this.winningScore) this.gameOver = true;
