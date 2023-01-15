@@ -88,7 +88,9 @@ window.addEventListener('load', function(){
             }
         }
         draw(context){
+            context.save();
             context.drawImage(this.image, this.frameX * this.spriteSize, this.frameY * this.spriteSize, this.spriteSize, this.spriteSize, this.x, this.y, this.size, this.size);
+            context.restore();
         }
     }
     class Player {
