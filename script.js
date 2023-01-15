@@ -89,7 +89,9 @@ window.addEventListener('load', function(){
         }
         draw(context){
             context.save();
-            context.drawImage(this.image, this.frameX * this.spriteSize, this.frameY * this.spriteSize, this.spriteSize, this.spriteSize, this.x, this.y, this.size, this.size);
+            context.translate(this.x, this.y);
+            context.rotate(this.angle);
+            context.drawImage(this.image, this.frameX * this.spriteSize, this.frameY * this.spriteSize, this.spriteSize, this.spriteSize, this.size * -0.5, this.size * -0.5, this.size, this.size);
             context.restore();
         }
     }
@@ -386,7 +388,7 @@ window.addEventListener('load', function(){
                 enemy.update();
                 if (this.checkCollision(this.player, enemy)){
                     enemy.markedForDeletion = true;
-                    for (let i = 0; i < 10; i++){
+                    for (let i = 0; i < 6; i++){
                         this.shrapnel.push(new Shrapnel(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                     }
                     if (enemy.type = 'lucky') this.player.enterPowerUp();
