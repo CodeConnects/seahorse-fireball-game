@@ -391,7 +391,7 @@ window.addEventListener('load', function(){
                     for (let i = 0; i < 6; i++){
                         this.shrapnel.push(new Shrapnel(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                     }
-                    if (enemy.type = 'lucky') this.player.enterPowerUp();
+                    if (enemy.type === 'lucky') this.player.enterPowerUp();
                     else this.score--;
                 }
                 this.player.projectiles.forEach(projectile => {
