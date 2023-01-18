@@ -422,8 +422,8 @@ window.addEventListener('load', function(){
         }
         draw(context){
             this.background.draw(context);
-            this.player.draw(context);
             this.ui.draw(context);
+            this.player.draw(context);
             this.shrapnel.forEach(onePiece => onePiece.draw(context));
             this.enemies.forEach(enemy => {
                 enemy.draw(context);
