@@ -417,7 +417,7 @@ window.addEventListener('load', function(){
                 enemy.update();
                 if (this.checkCollision(this.player, enemy)){
                     enemy.markedForDeletion = true;
-                    for (let i = 0; i < 6; i++){
+                    for (let i = 0; i < enemy.score; i++){
                         this.shrapnel.push(new Shrapnel(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                     }
                     if (enemy.type === 'lucky') this.player.enterPowerUp();
@@ -429,7 +429,7 @@ window.addEventListener('load', function(){
                         projectile.markedForDeletion = true;
                         this.shrapnel.push(new Shrapnel(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                         if (enemy.lives <= 0){
-                            for (let i = 0; i < 10; i++){
+                            for (let i = 0; i < enemy.score; i++){
                                 this.shrapnel.push(new Shrapnel(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                             }
                             enemy.markedForDeletion = true;
