@@ -246,7 +246,6 @@ window.addEventListener('load', function(){
             this.type = 'lucky';
         }
     }
-
     class HiveWhale extends Enemy {
         constructor(game){
             super(game);
@@ -452,6 +451,7 @@ window.addEventListener('load', function(){
             // show one of two enemies or luckyfish so far
             if (randomize < 0.3) this.enemies.push(new Angler1(this));
             else if (randomize < 0.6) this.enemies.push(new Angler2(this));
+            else if (randomize < 0.8) this.enemies.push(new HiveWhale(this));
             else this.enemies.push(new LuckyFish(this));
 
             console.log(this.enemies);
