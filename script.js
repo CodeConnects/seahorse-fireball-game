@@ -253,7 +253,7 @@ window.addEventListener('load', function(){
             this.height = 227;
             this.y = Math.random() * (this.game.height * 0.95 - this.height);
             this.image = document.getElementById('hivewhale');
-            this.frameY = 0
+            this.frameY = 0;
             this.lives = 15;
             this.score = this.lives;
             this.type = 'hive';
@@ -261,17 +261,18 @@ window.addEventListener('load', function(){
         }
     }
     class Drone extends Enemy {
-        constructor(game){
+        constructor(game, x, y){
             super(game);
-            this.width = 400;
-            this.height = 227;
-            this.y = Math.random() * (this.game.height * 0.95 - this.height);
+            this.width = 115;
+            this.height = 95;
+            this.x = x;
+            this.y = y;
             this.image = document.getElementById('drone');
-            this.frameY = 0
-            this.lives = 15;
+            this.frameY = Math.floor(Math.random() * 2);
+            this.lives = 3;
             this.score = this.lives;
             this.type = 'drone';
-            this.speedX = Math.random() * -1.2 - 0.2;
+            this.speedX = Math.random() * -4.2 - 0.5;
         }
     }
 
@@ -432,6 +433,13 @@ window.addEventListener('load', function(){
                                 this.shrapnel.push(new Shrapnel(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                             }
                             enemy.markedForDeletion = true;
+
+                            if (enemy.type ==='hive'){
+                                for (let i = 0; i < 5; i++){
+                                    this.enemies.push(new Drone(this, enemy.x + Math.random() * enemy.width, enemy.y + Math.random() * enemy.height * 0.5));
+                                }
+                            }
+
                             if (!this.gameOver) this.score += enemy.score;
                             if (this.score > this.winningScore) this.gameOver = true;
                         }
