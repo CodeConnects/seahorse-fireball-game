@@ -14,6 +14,6 @@ body { margin: 0; padding: 0; height: 100vh; background: rgb(29,28,59);
     font-family: 'Audiowide', cursive;
 }
 
-#layer1, #layer2, #layer3, #layer4, #player, #angler1, #angler2, #lucky, #projectile, #gears { 
+#layer1, #layer2, #layer3, #layer4, #player, #angler1, #angler2, #lucky, #projectile, #gears, #hivewhale { 
     display: none; 
 }
