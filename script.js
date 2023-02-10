@@ -323,26 +323,39 @@ window.addEventListener('load', function(){
     class Explosion {
         constructor(game, x, y){
             this.game = game;
-            this.x = x;
-            this.y = y;
             this.frameX = 0;
             this.spriteHeight = 200;
-            this.fps = 15;
+            this.fps = 5;
             this.timer = 0;
             this.inerval = 1000/this.fps;
             this.markedForDeletion = false;
+            this.maxFrame = 8;
         }
         update(deltaTime){
-            this.frameX++;
+            this.x -= this.game.speed;
+            if (this.timer > this.interval){
+                this.frameX++;
+                this.timer = 0;
+            } else {
+                this.timer += deltaTime;
+            }
+            if (this.frameX > this.maxFrame) this.markedForDeletion = true;
         }
         draw(context){
-            context.drawImage(this.image, this.x, this.y);
+            context.drawImage(this.image, this.frameX * this.spriteWidth, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
         }
     }
 
     class SmokeExplosion extends Explosion {
         constructor(game, x, y){
-            
+            super(game, x, y);
+
+            this.image = document.getElementById('smokeExplosion');
+            this.spriteWidth = 200;
+            this.width = this.spriteWidth;
+            this.height = this.spriteHeight;
+            this.x = x - this.width * 0.5;
+            this.y = y - this.height * 0.5;
         }
     }
     class FireExplosion extends Explosion {
@@ -410,6 +423,7 @@ window.addEventListener('load', function(){
             this.keys = [];
             this.enemies = [];
             this.shrapnel = [];
+            this.explosions = [];
             this.enemyTimer = 0;
             this.enemyInterval = 1000;
             this.ammo = 20;
@@ -433,7 +447,7 @@ window.addEventListener('load', function(){
             if (this.ammoTimer > this.ammoInterval){
                 if (this.ammo < this.maxAmmo) {
                     this.ammo++;
-                    console.log('ammo count: ' + this.ammo);
+                    // console.log('ammo count: ' + this.ammo);
                 }
                 this.ammoTimer = 0;
             } else {
@@ -443,10 +457,14 @@ window.addEventListener('load', function(){
             this.shrapnel.forEach(onePiece => onePiece.update());
             this.shrapnel = this.shrapnel.filter(onePiece => !onePiece.markedForDeletion);
 
+            this.explosions.forEach(explosion => explosion.update(deltaTime));
+            this.explosions = this.explosions.filter(explosion => !explosion.markedForDeletion);
+
             this.enemies.forEach(enemy => {
                 enemy.update();
                 if (this.checkCollision(this.player, enemy)){
                     enemy.markedForDeletion = true;
+                    this.addExplosion(enemy);
                     for (let i = 0; i < enemy.score; i++){
                         this.shrapnel.push(new Shrapnel(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                     }
@@ -463,6 +481,7 @@ window.addEventListener('load', function(){
                                 this.shrapnel.push(new Shrapnel(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                             }
                             enemy.markedForDeletion = true;
+                            this.addExplosion(enemy);
 
                             if (enemy.type ==='hive'){
                                 for (let i = 0; i < 5; i++){
@@ -494,6 +513,9 @@ window.addEventListener('load', function(){
             this.enemies.forEach(enemy => {
                 enemy.draw(context);
             });
+            this.explosions.forEach(explosion => {
+                explosion.draw(context);
+            });
             this.background.layer4.draw(context);
         }
         addEnemy(){
@@ -507,6 +529,10 @@ window.addEventListener('load', function(){
             else this.enemies.push(new LuckyFish(this));
 
             console.log(this.enemies);
+        }
+        addExplosion(enemy){
+            const randomize = Math.random();
+            if (randomize < 1) this.explosions.push(new SmokeExplosion(this, enemy.x, enemy.y));
         }
         checkCollision(rect1, rect2){
             return (    rect1.x < rect2.x + rect2.width &&
@@ -531,8 +557,8 @@ window.addEventListener('load', function(){
         // clear what has already been drawn while looping
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        game.update(deltaTime);
         game.draw(ctx);
+        game.update(deltaTime);
 
         // using parent as argument to make endless loop
         requestAnimationFrame(animate);
