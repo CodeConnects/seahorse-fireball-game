@@ -333,11 +333,20 @@ window.addEventListener('load', function(){
             this.markedForDeletion = false;
         }
         update(deltaTime){
-
+            this.frameX++;
         }
         draw(context){
+            context.drawImage(this.image, this.x, this.y);
+        }
+    }
+
+    class SmokeExplosion extends Explosion {
+        constructor(game, x, y){
             
         }
+    }
+    class FireExplosion extends Explosion {
+
     }
 
     class UI {
