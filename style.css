@@ -16,7 +16,7 @@ body { margin: 0; padding: 0; height: 100vh; background: rgb(29,28,59);
 
 #layer1, #layer2, #layer3, #layer4, 
 #player, #angler1, #angler2, #lucky,
-#hivewhale, #drone,
+#hivewhale, #drone, #bulbwhale, #moonfish,
 #projectile, #fireball, #gears, 
 #smokeExplosion, #fireExplosion { 
     display: none; 
