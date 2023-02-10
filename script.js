@@ -35,15 +35,27 @@ window.addEventListener('load', function(){
             this.game = game;
             this.x = x;
             this.y = y;
-            this.width = 10;
-            this.height = 3;
-            this.speed = 3;
+            this.width = 36.25;
+            this.height = 20;
+            this.speed = Math.random() * 0.2 + 2.8;
             this.markedForDeletion = false;
-            this.image = document.getElementById('projectile');
+            this.image = document.getElementById('fireball');
+            this.frameX = 0;
+            this.maxFrame = 3;
+            this.fps = 10;
+            this.timer = 0;
+            this.interval = 1000/this.fps;
             
         }
-        update(){
+        update(deltaTime){
             this.x += this.speed;
+            if (this.timer > this.interval){
+                if (this.frameX < this.maxFrame) this.frameX++;
+                else this.frameX = 0;
+                this.timer = 0;
+            } else {
+                this.timer += deltaTime;
+            }
             if (this.x > this.game.width * 0.8) this.markedForDeletion = true;
         }
         draw(context){
@@ -53,7 +65,7 @@ window.addEventListener('load', function(){
             */
 
             // image projectile
-            context.drawImage(this.image, this.x, this.y);
+            context.drawImage(this.image, this.frameX * this.width, 0, this.width, this.height, this.x, this.y, this.width, this.height);
         }
     }
     class Shrapnel {
@@ -119,17 +131,15 @@ window.addEventListener('load', function(){
             else this.speedY = 0;
             this.y += this.speedY;
 
-            // vertical player boundaries
-
             // bottom boundary tail can go 50% below screen
-            if (this.y >  this.game.height - this.height * 0.5) this.y = this.game.height - this.height * 0.5;
+            if (this.y > this.game.height - this.height * 0.5) this.y = this.game.height - this.height * 0.5;
 
             // top boundary head can go 50% above screen
-            else if (this.y < -this.height * 0.5 ) this.y = -this.height * 0.5;
+            else if (this.y < -this.height * 0.5) this.y = -this.height * 0.5;
 
             // handle projectiles
             this.projectiles.forEach(projectile => {
-                projectile.update();
+                projectile.update(deltaTime);
             });
             this.projectiles = this.projectiles.filter(projectile => !projectile.markedForDeletion);
 
@@ -212,24 +222,26 @@ window.addEventListener('load', function(){
     class Angler1 extends Enemy {
         constructor(game){
             super(game);
+
             this.width = 228;
             this.height = 169;
             this.y = Math.random() * (this.game.height * 0.95 - this.height);
             this.image = document.getElementById('angler1');
             this.frameY = Math.floor(Math.random() * 3);
-            this.lives = 2;
+            this.lives = 5;
             this.score = this.lives;
         }
     }
     class Angler2 extends Enemy {
         constructor(game){
             super(game);
+
             this.width = 213;
             this.height = 165;
             this.y = Math.random() * (this.game.height * 0.95 - this.height);
             this.image = document.getElementById('angler2');
             this.frameY = Math.floor(Math.random() * 2);
-            this.lives = 3;
+            this.lives = 6;
             this.score = this.lives;
         }
     }
@@ -241,7 +253,7 @@ window.addEventListener('load', function(){
             this.y = Math.random() * (this.game.height * 0.95 - this.height);
             this.image = document.getElementById('lucky');
             this.frameY = Math.floor(Math.random() * 2);
-            this.lives = 3;
+            this.lives = 5;
             this.score = 15;
             this.type = 'lucky';
         }
@@ -254,7 +266,7 @@ window.addEventListener('load', function(){
             this.y = Math.random() * (this.game.height * 0.95 - this.height);
             this.image = document.getElementById('hivewhale');
             this.frameY = 0;
-            this.lives = 15;
+            this.lives = 20;
             this.score = this.lives;
             this.type = 'hive';
             this.speedX = Math.random() * -1.2 - 0.2;
@@ -324,10 +336,15 @@ window.addEventListener('load', function(){
         constructor(game, x, y){
             this.game = game;
             this.frameX = 0;
+            this.spriteWidth = 200;
             this.spriteHeight = 200;
-            this.fps = 5;
+            this.width = this.spriteWidth;
+            this.height = this.spriteHeight;
+            this.x = x - this.width * 0.5;
+            this.y = y - this.height * 0.5;
+            this.fps = 30;
             this.timer = 0;
-            this.inerval = 1000/this.fps;
+            this.interval = 1000/this.fps;
             this.markedForDeletion = false;
             this.maxFrame = 8;
         }
@@ -351,15 +368,14 @@ window.addEventListener('load', function(){
             super(game, x, y);
 
             this.image = document.getElementById('smokeExplosion');
-            this.spriteWidth = 200;
-            this.width = this.spriteWidth;
-            this.height = this.spriteHeight;
-            this.x = x - this.width * 0.5;
-            this.y = y - this.height * 0.5;
         }
     }
     class FireExplosion extends Explosion {
+        constructor(game, x, y){
+            super(game, x, y);
 
+            this.image = document.getElementById('fireExplosion');
+        }
     }
 
     class UI {
