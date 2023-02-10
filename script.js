@@ -294,7 +294,7 @@ window.addEventListener('load', function(){
             this.height = 219;
             this.y = Math.random() * (this.game.height * 0.95 - this.height);
             this.image = document.getElementById('bulbwhale');
-            this.frameY = Math.floor(Math.random() *2);
+            this.frameY = Math.floor(Math.random() * 2);
             this.lives = 20;
             this.score = this.lives;
             this.speedX = Math.random() * -1.2 - 0.2;
@@ -303,14 +303,15 @@ window.addEventListener('load', function(){
     class MoonFish extends Enemy {
         constructor(game){
             super(game);
-            this.width = 400;
-            this.height = 227;
+            this.width = 227;
+            this.height = 240;
             this.y = Math.random() * (this.game.height * 0.95 - this.height);
             this.image = document.getElementById('moonfish');
-            this.frameY = 0;
-            this.lives = 20;
+            this.frameY = Math.floor(Math.random() * 2);
+            this.lives = 10;
             this.score = this.lives;
-            this.speedX = Math.random() * -1.2 - 0.2;
+            this.speedX = Math.random() * -1.2 - 2;
+            this.type = 'moon';
         }
     }
 
@@ -525,6 +526,9 @@ window.addEventListener('load', function(){
                             enemy.markedForDeletion = true;
                             this.addExplosion(enemy);
 
+                            // enter powerUp mode when MoonFish is destroyed
+                            if (enemy.type === 'moon') this.player.enterPowerUp();
+
                             if (enemy.type ==='hive'){
                                 for (let i = 0; i < 5; i++){
                                     this.enemies.push(new Drone(this, enemy.x + Math.random() * enemy.width, enemy.y + Math.random() * enemy.height * 0.5));
@@ -572,6 +576,7 @@ window.addEventListener('load', function(){
             else if (randomize < 0.6) this.enemies.push(new Angler2(this));
             else if (randomize < 0.7) this.enemies.push(new HiveWhale(this));
             else if (randomize < 0.8) this.enemies.push(new BulbWhale(this));
+            else if (randomize < 0.9) this.enemies.push(new MoonFish(this));
             else this.enemies.push(new LuckyFish(this));
 
             console.log(this.enemies);
