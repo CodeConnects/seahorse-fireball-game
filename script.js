@@ -4,8 +4,8 @@ window.addEventListener('load', function(){
 
     // context type, '2d' or 'webgl' (3d)
     const ctx = canvas.getContext('2d');
-    //canvas.width = 840;
-    canvas.width = 700;
+    canvas.width = 840;
+    //canvas.width = 700;
     canvas.height = 500;
 
     class InputHandler {
@@ -287,6 +287,32 @@ window.addEventListener('load', function(){
             this.speedX = Math.random() * -4.2 - 0.5;
         }
     }
+    class BulbWhale extends Enemy {
+        constructor(game){
+            super(game);
+            this.width = 270;
+            this.height = 219;
+            this.y = Math.random() * (this.game.height * 0.95 - this.height);
+            this.image = document.getElementById('bulbwhale');
+            this.frameY = Math.floor(Math.random() *2);
+            this.lives = 20;
+            this.score = this.lives;
+            this.speedX = Math.random() * -1.2 - 0.2;
+        }
+    }
+    class MoonFish extends Enemy {
+        constructor(game){
+            super(game);
+            this.width = 400;
+            this.height = 227;
+            this.y = Math.random() * (this.game.height * 0.95 - this.height);
+            this.image = document.getElementById('moonfish');
+            this.frameY = 0;
+            this.lives = 20;
+            this.score = this.lives;
+            this.speedX = Math.random() * -1.2 - 0.2;
+        }
+    }
 
 
     class Layer {
@@ -410,8 +436,8 @@ window.addEventListener('load', function(){
                     message1 = 'You win!';
                     message2 = 'Well done!';
                 } else {
-                    message1 = 'You lost!';
-                    message2 = 'Maybe next time!';
+                    message1 = 'Oh no!';
+                    message2 = 'Repair your seahorse and try again!';
                 }
                 context.font = '64px ' + this.fontFamily;
                 context.fillText(message1, this.game.width * 0.5, this.game.height * 0.5 - 18);
@@ -441,16 +467,16 @@ window.addEventListener('load', function(){
             this.shrapnel = [];
             this.explosions = [];
             this.enemyTimer = 0;
-            this.enemyInterval = 1000;
+            this.enemyInterval = 2000;
             this.ammo = 20;
             this.maxAmmo = 50;
             this.ammoTimer = 0;
-            this.ammoInterval = 500;
+            this.ammoInterval = 350;
             this.gameOver = false;
             this.score = 0;
             this.winningScore = 100;
             this.gameTime = 0;
-            this.timeLimit = 60000;
+            this.timeLimit = 30000;
             this.speed = 1;
             this.debug = false;
         }
@@ -485,7 +511,7 @@ window.addEventListener('load', function(){
                         this.shrapnel.push(new Shrapnel(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                     }
                     if (enemy.type === 'lucky') this.player.enterPowerUp();
-                    else this.score--;
+                    else if (this.gameOver) this.score--;
                 }
                 this.player.projectiles.forEach(projectile => {
                     if (this.checkCollision(projectile, enemy)){
@@ -506,6 +532,9 @@ window.addEventListener('load', function(){
                             }
 
                             if (!this.gameOver) this.score += enemy.score;
+
+                            // todo add option for max score or max speed for game play
+
                             if (this.score > this.winningScore) this.gameOver = true;
                         }
                     }
@@ -541,7 +570,8 @@ window.addEventListener('load', function(){
             // show one of two enemies or luckyfish so far
             if (randomize < 0.3) this.enemies.push(new Angler1(this));
             else if (randomize < 0.6) this.enemies.push(new Angler2(this));
-            else if (randomize < 0.8) this.enemies.push(new HiveWhale(this));
+            else if (randomize < 0.7) this.enemies.push(new HiveWhale(this));
+            else if (randomize < 0.8) this.enemies.push(new BulbWhale(this));
             else this.enemies.push(new LuckyFish(this));
 
             console.log(this.enemies);
