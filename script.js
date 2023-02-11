@@ -30,6 +30,18 @@ window.addEventListener('load', function(){
             })
         }
     }
+
+    class SoundController {
+        constructor(){
+            this.powerUpSound = document.getElementById('powerup');
+        }
+        powerUp(){
+            // rewind the sound file each time it is played in case file is already playing
+            this.powerUpSound.currentTime = 0;
+            this.powerUpSound.play();
+        }
+    }
+
     class Projectile {
         constructor(game, x, y){
             this.game = game;
@@ -186,7 +198,8 @@ window.addEventListener('load', function(){
         enterPowerUp(){
             this.powerUpTimer = 0;
             this.powerUp = true;
-            this.game.ammo = this.game.maxAmmo;
+            if (this.game.ammo < this.game.maxAmmo) this.game.ammo = this.game.maxAmmo;
+            this.game.sound.powerUp();
         }
     }
     class Enemy {
@@ -463,6 +476,7 @@ window.addEventListener('load', function(){
             this.player = new Player(this);
             this.input = new InputHandler(this);
             this.ui = new UI(this);
+            this.sound = new SoundController();
             this.keys = [];
             this.enemies = [];
             this.shrapnel = [];
