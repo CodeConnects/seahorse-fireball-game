@@ -389,6 +389,34 @@ window.addEventListener('load', function(){
             this.type = 'moonfish';
         }
     }
+    class Stalker extends Enemy {
+        constructor(game){
+            super(game);
+
+            this.width = 243;
+            this.height = 123;
+            this.y = Math.random() * (this.game.height * 0.95 - this.height);
+            this.image = document.getElementById('stalker');
+            this.frameY = 0
+            this.lives = 5;
+            this.score = this.lives;
+            this.speedX = Math.random() * -1 - 1;
+        }
+    }
+    class Razorfin extends Enemy {
+        constructor(game){
+            super(game);
+
+            this.width = 187;
+            this.height = 149;
+            this.y = Math.random() * (this.game.height * 0.95 - this.height);
+            this.image = document.getElementById('razorfin');
+            this.frameY = 0
+            this.lives = 7;
+            this.score = this.lives;
+            this.speedX = Math.random() * -1 - 1;
+        }
+    }
 
 
     class Layer {
@@ -654,8 +682,10 @@ window.addEventListener('load', function(){
             // random number between zero and one
             const randomize = Math.random();
 
-            // show one of two enemies or luckyfish so far
-            if (randomize < 0.3) this.enemies.push(new Angler1(this));
+            // show one of several enemies depending on the random number
+            if (randomize < 0.1) this.enemies.push(new Angler1(this));
+            else if (randomize < 0.3) this.enemies.push(new Stalker(this));
+            else if (randomize < 0.5) this.enemies.push(new Razorfin(this));
             else if (randomize < 0.6) this.enemies.push(new Angler2(this));
             else if (randomize < 0.7) this.enemies.push(new HiveWhale(this));
             else if (randomize < 0.8) this.enemies.push(new BulbWhale(this));
