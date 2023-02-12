@@ -34,11 +34,46 @@ window.addEventListener('load', function(){
     class SoundController {
         constructor(){
             this.powerUpSound = document.getElementById('powerup');
+            this.powerDownSound = document.getElementById('powerdown');
+            this.explosionSound = document.getElementById('explosion');
+            this.shotSound = document.getElementById('shot');
+            this.hitSound = document.getElementById('hit');
+            this.shieldSound = document.getElementById('shield');
         }
         powerUp(){
             // rewind the sound file each time it is played in case file is already playing
             this.powerUpSound.currentTime = 0;
             this.powerUpSound.play();
+        }
+        powerDown(){
+            this.powerDownSound.currentTime = 0;
+            this.powerDownSound.play();
+        }
+        explosion(){
+            this.explosionSound.currentTime = 0;
+            this.explosionSound.play();
+        }
+        shot(){
+            this.shotSound.currentTime = 0;
+            this.shotSound.play();
+        }
+        hit(){
+            this.hitSound.currentTime = 0;
+            this.hitSound.play();
+        }
+        shield(){
+            this.shieldSound.currentTime = 0;
+            this.shieldSound.play();
+        }
+    }
+
+    class Shield {
+        constructor(game){
+            this.game = game;
+            this.width = this.game.player.width;
+            this.height = this.game.player.height;
+            this.frameX = 0;
+            this.maxFrame = 24;
         }
     }
 
@@ -168,6 +203,7 @@ window.addEventListener('load', function(){
                     this.powerUpTimer = 0;
                     this.powerUp = false;
                     this.frameY = 0;
+                    this.game.sound.powerDown();
                 } else {
                     this.powerUpTimer += deltaTime;
                     this.frameY = 1;
@@ -188,6 +224,7 @@ window.addEventListener('load', function(){
                 this.projectiles.push(new Projectile(this.game, this.x + 80, this.y + 30));
                 this.game.ammo--;
             }
+            this.game.sound.shot();
             if (this.powerUp) this.shootBottom();
         }
         shootBottom(){
@@ -261,6 +298,7 @@ window.addEventListener('load', function(){
     class LuckyFish extends Enemy {
         constructor(game){
             super(game);
+
             this.width = 99;
             this.height = 95;
             this.y = Math.random() * (this.game.height * 0.95 - this.height);
@@ -288,6 +326,7 @@ window.addEventListener('load', function(){
     class Drone extends Enemy {
         constructor(game, x, y){
             super(game);
+
             this.width = 115;
             this.height = 95;
             this.x = x;
@@ -303,6 +342,7 @@ window.addEventListener('load', function(){
     class BulbWhale extends Enemy {
         constructor(game){
             super(game);
+
             this.width = 270;
             this.height = 219;
             this.y = Math.random() * (this.game.height * 0.95 - this.height);
@@ -316,6 +356,7 @@ window.addEventListener('load', function(){
     class MoonFish extends Enemy {
         constructor(game){
             super(game);
+
             this.width = 227;
             this.height = 240;
             this.y = Math.random() * (this.game.height * 0.95 - this.height);
@@ -324,7 +365,7 @@ window.addEventListener('load', function(){
             this.lives = 10;
             this.score = this.lives;
             this.speedX = Math.random() * -1.2 - 2;
-            this.type = 'moon';
+            this.type = 'moonfish';
         }
     }
 
@@ -522,6 +563,7 @@ window.addEventListener('load', function(){
                 if (this.checkCollision(this.player, enemy)){
                     enemy.markedForDeletion = true;
                     this.addExplosion(enemy);
+                    this.sound.hit();
                     for (let i = 0; i < enemy.score; i++){
                         this.shrapnel.push(new Shrapnel(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                     }
@@ -539,11 +581,12 @@ window.addEventListener('load', function(){
                             }
                             enemy.markedForDeletion = true;
                             this.addExplosion(enemy);
+                            this.sound.explosion();
 
                             // enter powerUp mode when MoonFish is destroyed
-                            if (enemy.type === 'moon') this.player.enterPowerUp();
+                            if (enemy.type === 'moonfish') this.player.enterPowerUp();
 
-                            if (enemy.type ==='hive'){
+                            if (enemy.type === 'hive'){
                                 for (let i = 0; i < 5; i++){
                                     this.enemies.push(new Drone(this, enemy.x + Math.random() * enemy.width, enemy.y + Math.random() * enemy.height * 0.5));
                                 }
