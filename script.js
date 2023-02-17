@@ -412,7 +412,7 @@ window.addEventListener('load', function(){
             this.y = Math.random() * (this.game.height * 0.95 - this.height);
             this.image = document.getElementById('razorfin');
             this.frameY = 0
-            this.lives = 6;
+            this.lives = 7;
             this.score = this.lives;
             this.speedX = Math.random() * -1 - 1;
         }
