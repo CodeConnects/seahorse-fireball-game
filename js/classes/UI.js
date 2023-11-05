@@ -15,11 +15,11 @@ export default class UI {
     context.font = this.fontSize + 'px ' + this.fontFamily;
 
     // score
-    context.fillText('Score: ' + this.game.score, 1060, 40);
+    context.fillText('Score: ' + this.game.score, 600, 40);
 
     // timer
     const formattedTime = (this.game.gameTime * 0.001).toFixed(1);
-    context.fillText('Timer: ' + formattedTime, 20, 40);
+    context.fillText('Timer: ' + formattedTime, 1064, 40);
 
     // game over message
     if (this.game.gameOver) {
@@ -41,9 +41,9 @@ export default class UI {
 
     // ammo
     if (this.game.player.powerUp) context.fillStyle = '#ffffbd';
-    context.fillText('Ammo:', 20, 70);
+    context.fillText('Ammo:', 20, 40);
     for (let i = 0; i < this.game.ammo; i++) {
-      context.fillRect(114 + 5 * i, 53, 3, 20);
+      context.fillRect(114 + 5 * i, 23, 3, 20);
     }
 
     context.restore();
