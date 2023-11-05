@@ -19,6 +19,18 @@ import SmokeExplosion from './explosions/SmokeExplosion.js';
 
 export default class Game {
   constructor(width, height) {
+    this.debug = false;
+
+    this.winningScore = 100;
+    // in milliseconds
+    this.timeLimit = 30000;
+
+    this.enemyInterval = 2000;
+    this.speed = 1;
+    this.ammo = 20;
+    this.maxAmmo = 50;
+    this.ammoInterval = 350;
+
     this.width = width;
     this.height = height;
     this.background = new Background(this);
@@ -32,22 +44,18 @@ export default class Game {
     this.shrapnel = [];
     this.explosions = [];
     this.enemyTimer = 0;
-    this.enemyInterval = 2000;
-    this.ammo = 20;
-    this.maxAmmo = 50;
     this.ammoTimer = 0;
-    this.ammoInterval = 350;
     this.gameOver = false;
     this.score = 0;
-    this.winningScore = 100;
     this.gameTime = 0;
-    this.timeLimit = 30000;
-    this.speed = 1;
-    this.debug = false;
   }
   update(deltaTime) {
     if (!this.gameOver) this.gameTime += deltaTime;
-    if (this.gameTime > this.timeLimit) this.gameOver = true;
+    
+    if (this.gameTime > this.timeLimit) {
+      this.gameOver = true;
+    }
+
     this.background.update();
     this.background.layer4.update();
     this.player.update(deltaTime);
