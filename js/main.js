@@ -7,9 +7,11 @@ window.addEventListener('load', function () {
 
   // context type, '2d' or 'webgl' (3d)
   const ctx = canvas.getContext('2d');
+  const w = 1240;
+  const h = 700;
 
-  canvas.width = 840;
-  canvas.height = 500;
+  canvas.width = w;
+  canvas.height = h;
 
   const game = new Game(canvas.width, canvas.height);
 
@@ -17,6 +19,24 @@ window.addEventListener('load', function () {
 
   // animation loop
   function animate(timeStamp) {
+
+    if (game.gameOver) {
+      ctx.fillStyle = 'rgba(0,0,0,0.5)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = 'white';
+      ctx.font = '50px Arial';
+      ctx.fillText('GAME OVER', canvas.width / 2 - 150, canvas.height / 2);
+      return;
+    }
+
+    if (game.score >= game.winningScore) {
+      ctx.fillStyle = 'rgba(0,0,0,0.5)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = 'white';
+      ctx.font = '50px Arial';
+      ctx.fillText('LEVEL COMPLETE', canvas.width / 2 - 200, canvas.height / 2);
+      return;
+    }
 
     const deltaTime = timeStamp - lastTime;
     // console.log(deltaTime);
@@ -32,5 +52,6 @@ window.addEventListener('load', function () {
     // using parent as argument to make endless loop
     requestAnimationFrame(animate);
   }
+
   animate(0);
 });
