@@ -1,12 +1,12 @@
 export default class Layer {
-  constructor(game, image, speedModifier) {
+  constructor(game, image, speedModifier, y = 0) {
     this.game = game;
     this.image = image;
     this.speedModifier = speedModifier;
     this.width = 1768;
-    this.height = 500;
+    this.height = 700;
     this.x = 0;
-    this.y = 0;
+    this.y = y;
   }
   update() {
     if (this.x <= -this.width) this.x = 0;
