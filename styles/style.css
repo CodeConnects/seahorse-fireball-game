@@ -22,3 +22,14 @@ body { margin: 0; padding: 0; height: 100vh; background: rgb(29,28,59);
 #smokeExplosion, #fireExplosion { 
     display: none; 
 }
+
+.screen {
+  text-align: center;
+  max-width: 1240px;
+  margin: 0 auto;
+  position: absolute;
+  top: 40%;
+  z-index: 9999;
+  left: -50%;
+  right: -50%;
+}
