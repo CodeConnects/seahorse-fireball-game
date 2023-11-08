@@ -23,7 +23,8 @@ export default class Game {
 
     this.winningScore = 100;
     // in milliseconds
-    this.timeLimit = 30000;
+    // this.timeLimit = 30000;
+    this.timeLimit = 5000;
 
     this.enemyInterval = 2000;
     this.speed = 1;
@@ -51,7 +52,7 @@ export default class Game {
   }
   update(deltaTime) {
     if (!this.gameOver) this.gameTime += deltaTime;
-    
+
     if (this.gameTime > this.timeLimit) {
       this.gameOver = true;
     }
@@ -175,5 +176,23 @@ export default class Game {
       rect1.x + rect1.width > rect2.x &&
       rect1.y < rect2.y + rect2.height &&
       rect1.height + rect1.y > rect2.y)
+  }
+  start() {
+    this.gameOver = false;
+    this.score = 0;
+    this.gameTime = 0;
+    // Reset any other game properties as needed.
+  }
+
+  reset() {
+    this.enemies = [];
+    this.shrapnel = [];
+    this.explosions = [];
+    this.enemyTimer = 0;
+    this.ammoTimer = 0;
+    this.ammo = 20;
+    
+    // ... reset other properties as needed
+    this.start();
   }
 }
