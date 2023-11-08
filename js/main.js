@@ -42,6 +42,27 @@ window.addEventListener('load', function () {
   
   function animate(timeStamp) {
     if (game.gameOver) {
+      // stop the game loop
+      // print the game over message
+      ctx.textAlign = 'center';
+      let message1;
+      let message2;
+      if (game.score > game.winningScore) {
+        message1 = 'You win!';
+        message2 = 'Well done!';
+      } else {
+        message1 = 'Oh no!';
+        message2 = 'Repair your seahorse and try again!';
+      }
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.69)';
+      ctx.fillRect(0, 0, game.width, game.height);
+
+      ctx.fillStyle = 'white';
+      ctx.font = '64px ' + game.ui.fontFamily;
+      ctx.fillText(message1, game.width * 0.5, game.height * 0.5 - 18);
+      ctx.font = '25px ' + game.ui.fontFamily;
+      ctx.fillText(message2, game.width * 0.5, game.height * 0.5 + 18);
+
       gameOverScreen.style.display = 'block';
       return; // Stop the animation loop when the game is over.
     }
