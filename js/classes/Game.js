@@ -23,8 +23,8 @@ export default class Game {
 
     this.winningScore = 100;
     // in milliseconds
-    // this.timeLimit = 30000;
-    this.timeLimit = 5000;
+    this.timeLimit = 30000;
+    //this.timeLimit = 5000;
 
     this.enemyInterval = 2000;
     this.speed = 1;
@@ -181,7 +181,6 @@ export default class Game {
     this.gameOver = false;
     this.score = 0;
     this.gameTime = 0;
-    // Reset any other game properties as needed.
   }
 
   reset() {
@@ -191,8 +190,7 @@ export default class Game {
     this.enemyTimer = 0;
     this.ammoTimer = 0;
     this.ammo = 20;
-    
-    // ... reset other properties as needed
+
     this.start();
   }
 }
