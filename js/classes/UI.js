@@ -14,6 +14,13 @@ export default class UI {
     context.shadowColor = 'black';
     context.font = this.fontSize + 'px ' + this.fontFamily;
 
+    // ammo
+    if (this.game.player.powerUp) context.fillStyle = '#ffffbd';
+    context.fillText('Ammo:', 20, 40);
+    for (let i = 0; i < this.game.ammo; i++) {
+      context.fillRect(114 + 5 * i, 23, 3, 20);
+    }
+    
     // score
     context.fillText('Score: ' + this.game.score, 600, 40);
 
@@ -37,13 +44,6 @@ export default class UI {
       context.fillText(message1, this.game.width * 0.5, this.game.height * 0.5 - 18);
       context.font = '25px ' + this.fontFamily;
       context.fillText(message2, this.game.width * 0.5, this.game.height * 0.5 + 18);
-    }
-
-    // ammo
-    if (this.game.player.powerUp) context.fillStyle = '#ffffbd';
-    context.fillText('Ammo:', 20, 40);
-    for (let i = 0; i < this.game.ammo; i++) {
-      context.fillRect(114 + 5 * i, 23, 3, 20);
     }
 
     context.restore();
