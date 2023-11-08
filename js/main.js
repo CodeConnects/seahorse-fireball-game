@@ -12,12 +12,19 @@ window.addEventListener('load', function () {
   canvas.height = 700;
 
   const game = new Game(canvas.width, canvas.height);
+  game.background.draw(ctx);
+  game.background.layer4.draw(ctx);
+  // draw a semi-transparent black rectangle over the background
+  // to make the text more readable
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.69)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
 
   let lastTime = 0;
 
   function startGame() {
     startScreen.style.display = 'none';
-    canvas.style.display = 'block';
+    //canvas.style.display = 'block';
     game.start();
     animate(0);
   }
